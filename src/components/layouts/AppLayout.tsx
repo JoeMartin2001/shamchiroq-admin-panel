@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
+import ListIcon from "@mui/icons-material/List";
 import { LogoutOutlined } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -38,6 +39,11 @@ const ROUTES: RouteType[] = [
     path: "/users",
     title: "Users",
     Icon: <PersonIcon />,
+  },
+  {
+    path: "/items",
+    title: "Items",
+    Icon: <ListIcon />,
   },
 ];
 

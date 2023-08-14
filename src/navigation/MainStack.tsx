@@ -3,6 +3,7 @@ import { AppLayout } from "../components/layouts/AppLayout";
 import HomePage from "../pages/home";
 import UsersPage from "../pages/users";
 import { NoMatch } from "../components/shared/noMatch";
+import ItemsPage from "../pages/items";
 
 const MainStack = () => {
   return (
@@ -10,6 +11,7 @@ const MainStack = () => {
       <Route path="/" element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="users" element={<UsersPage />} />
+        <Route path="items" element={<ItemsPage />} />
 
         {/* Using path="*"" means "match anything", so this route
                   acts like a catch-all for URLs that we don't have explicit

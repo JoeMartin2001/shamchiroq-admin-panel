@@ -4,14 +4,17 @@ import { Report } from "../../model";
 import { useCallback, useEffect, useState } from "react";
 import { BASE_URL_API } from "../../utils/api";
 import ReportCard from "../../components/home/ReportCard";
+import { LoadingBackdrop } from "../../components/shared/LoadingBackdrop";
 
-const limit = 30;
+const limit = 10;
 
 const HomePage = () => {
   const axios = useAxios();
 
   const [allReports, setAllReports] = useState<Report[]>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getAllReports = useCallback(async () => {
     try {
@@ -19,11 +22,10 @@ const HomePage = () => {
         `${BASE_URL_API}/report/getReports?page=${page}&limit=${limit}`
       );
 
-      const newReports = reports.data as Report[];
+      const newReports = reports.data.rows as Report[];
+      const updatedCount = Math.ceil(reports.data.count / limit);
 
-      console.log(newReports);
-      console.log(newReports[0]);
-
+      setCount(updatedCount);
       setAllReports(newReports);
     } catch (error) {
       console.log(error);
@@ -32,8 +34,16 @@ const HomePage = () => {
   }, [page]);
 
   useEffect(() => {
-    getAllReports();
+    setIsLoading(true);
+
+    getAllReports().finally(() => {
+      setIsLoading(false);
+    });
   }, [getAllReports]);
+
+  if (isLoading) {
+    return <LoadingBackdrop isLoading={isLoading} />;
+  }
 
   return (
     <div>
@@ -49,7 +59,7 @@ const HomePage = () => {
 
           <Pagination
             onChange={(_, nextPage) => setPage(nextPage)}
-            count={10}
+            count={count}
             variant="outlined"
           />
         </div>

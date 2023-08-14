@@ -1,32 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
+import { Item } from "../../model";
 import { BASE_URL_API } from "../../utils/api";
-import { User } from "../../model";
-import { UserCard } from "../../components/users/UserCard";
-import { Box, Grid, Pagination } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
+import ItemCard from "../../components/items/ItemCard";
 import { LoadingBackdrop } from "../../components/shared/LoadingBackdrop";
 
 const limit = 10;
 
-const UsersPage = () => {
+const ItemsPage = () => {
   const axios = useAxios();
 
-  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [allItems, setAllItems] = useState<Item[]>([]);
   const [page, setPage] = useState(0);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getAllUsers = useCallback(async () => {
+  const getAllReports = useCallback(async () => {
     try {
-      const users = await axios.get(
-        `${BASE_URL_API}/user/getUsers?page=${page}&limit=${limit}`
+      const items = await axios.get(
+        `${BASE_URL_API}/item/getItems?page=${page}&limit=${limit}`
       );
 
-      const newUsers = users.data.rows as User[];
-      const updatedCount = Math.ceil(users.data.count / limit);
+      const newItems = items.data.rows as Item[];
+      const updatedCount = Math.ceil(items.data.count / limit);
 
       setCount(updatedCount);
-      setAllUsers(newUsers);
+      setAllItems(newItems);
     } catch (error) {
       console.log(error);
     }
@@ -36,10 +36,10 @@ const UsersPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    getAllUsers().finally(() => {
+    getAllReports().finally(() => {
       setIsLoading(false);
     });
-  }, [getAllUsers]);
+  }, [getAllReports]);
 
   if (isLoading) {
     return <LoadingBackdrop isLoading={isLoading} />;
@@ -47,17 +47,15 @@ const UsersPage = () => {
 
   return (
     <div>
-      {allUsers.length > 0 ? (
+      {allItems.length > 0 ? (
         <div>
-          <Box marginBottom={5}>
-            <Grid container spacing={2} marginBottom={5}>
-              {allUsers.map((user, idx) => (
-                <Grid item xs={4} key={idx + user.id!}>
-                  <UserCard user={user} key={idx + user.id} />
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
+          <Grid container spacing={2} marginBottom={5}>
+            {allItems.map((item, idx) => (
+              <Grid item xs={4} key={idx + item.id!}>
+                <ItemCard item={item} />
+              </Grid>
+            ))}
+          </Grid>
 
           <Pagination
             onChange={(_, nextPage) => setPage(nextPage)}
@@ -67,11 +65,11 @@ const UsersPage = () => {
         </div>
       ) : (
         <div>
-          <p>No users found...</p>
+          <p>No items found...</p>
         </div>
       )}
     </div>
   );
 };
 
-export default UsersPage;
+export default ItemsPage;
