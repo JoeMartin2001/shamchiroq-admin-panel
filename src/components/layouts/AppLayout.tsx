@@ -16,6 +16,9 @@ import Typography from "@mui/material/Typography";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
+import { LogoutOutlined } from "@mui/icons-material";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const drawerWidth = 240;
 
@@ -58,6 +61,10 @@ export const AppLayout = (props: Props) => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    signOut(auth).then(() => {});
+  };
+
   const drawer = (
     <div>
       <Toolbar />
@@ -85,6 +92,15 @@ export const AppLayout = (props: Props) => {
             </ListItem>
           );
         })}
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutOutlined />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
