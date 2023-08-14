@@ -7,7 +7,7 @@ export const useAxios = () => {
   const get = useCallback(
     async (uri: string, shouldIncludeBearerToken: boolean = true) => {
       const uid = await auth.currentUser?.getIdToken();
-      console.log(auth.currentUser);
+
       const options: Partial<AxiosResponse> = {};
 
       if (shouldIncludeBearerToken) {
