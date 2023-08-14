@@ -5,4 +5,5 @@ export const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://my-shamchiroq.uz"
     : "http://localhost:3002";
+
 export const BASE_URL_API = `${BASE_URL}/api`;
