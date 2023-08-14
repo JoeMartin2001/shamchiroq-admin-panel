@@ -21,6 +21,7 @@ const HomePage = () => {
 
       const newReports = reports.data as Report[];
 
+      console.log(newReports);
       console.log(newReports[0]);
 
       setAllReports(newReports);
@@ -36,19 +37,27 @@ const HomePage = () => {
 
   return (
     <div>
-      <Grid container spacing={2} marginBottom={5}>
-        {allReports.map((report, idx) => (
-          <Grid item xs={4} key={idx + report.id!}>
-            <ReportCard report={report} />
+      {allReports.length > 0 ? (
+        <div>
+          <Grid container spacing={2} marginBottom={5}>
+            {allReports.map((report, idx) => (
+              <Grid item xs={4} key={idx + report.id!}>
+                <ReportCard report={report} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
 
-      <Pagination
-        onChange={(_, nextPage) => setPage(nextPage)}
-        count={10}
-        variant="outlined"
-      />
+          <Pagination
+            onChange={(_, nextPage) => setPage(nextPage)}
+            count={10}
+            variant="outlined"
+          />
+        </div>
+      ) : (
+        <div>
+          <p>No reports found...</p>
+        </div>
+      )}
     </div>
   );
 };

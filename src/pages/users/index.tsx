@@ -36,21 +36,29 @@ const UsersPage = () => {
 
   return (
     <div>
-      <Box marginBottom={5}>
-        <Grid container spacing={2} marginBottom={5}>
-          {allUsers.map((user, idx) => (
-            <Grid item xs={4} key={idx + user.id!}>
-              <UserCard user={user} key={idx + user.id} />
+      {allUsers.length > 0 ? (
+        <div>
+          <Box marginBottom={5}>
+            <Grid container spacing={2} marginBottom={5}>
+              {allUsers.map((user, idx) => (
+                <Grid item xs={4} key={idx + user.id!}>
+                  <UserCard user={user} key={idx + user.id} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Box>
+          </Box>
 
-      <Pagination
-        onChange={(_, nextPage) => setPage(nextPage)}
-        count={10}
-        variant="outlined"
-      />
+          <Pagination
+            onChange={(_, nextPage) => setPage(nextPage)}
+            count={10}
+            variant="outlined"
+          />
+        </div>
+      ) : (
+        <div>
+          <p>No users found...</p>
+        </div>
+      )}
     </div>
   );
 };
