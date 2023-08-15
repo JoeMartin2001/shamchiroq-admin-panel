@@ -8,6 +8,7 @@ import { Item } from "../../model";
 import { DraggableDialog } from "../shared/ConfirmationDialog";
 import { BASE_URL_API } from "../../utils/api";
 import { useAxios } from "../../hooks/useAxios";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   item: Item;
@@ -17,14 +18,13 @@ const ItemCard = (props: Props) => {
   const { item } = props;
 
   const axios = useAxios();
+  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
   const handleRemoveItem = async () => {
     try {
-      await axios.deleteData(
-        `${BASE_URL_API}/report/removeItemById/${item.id}`
-      );
+      await axios.deleteData(`${BASE_URL_API}/item/removeItemById/${item.id}`);
 
       setOpen(false);
     } catch (error) {
@@ -34,22 +34,33 @@ const ItemCard = (props: Props) => {
     }
   };
 
+  const handleLearnMore = () => {
+    return navigate(`/items/${item.id}`);
+  };
+
   return (
     <Card sx={{}}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography variant="h5" component="div">
           {item.title}
         </Typography>
-        <Typography variant="h5" component="div">
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {item.description}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {item.case}
         </Typography>
-        <Typography variant="body2">{item.user}</Typography>
+        <Typography variant="body2">
+          Posted by{" "}
+          {item.itemUser
+            ? `${item.itemUser.firstName} ${item.itemUser.lastName}`
+            : "No user found"}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleLearnMore}>
+          Learn More
+        </Button>
 
         <DraggableDialog
           title="Are you sure"

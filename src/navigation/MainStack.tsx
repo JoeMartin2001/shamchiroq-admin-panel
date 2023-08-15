@@ -4,6 +4,8 @@ import HomePage from "../pages/home";
 import UsersPage from "../pages/users";
 import { NoMatch } from "../components/shared/noMatch";
 import ItemsPage from "../pages/items";
+import ManageUser from "../pages/users/manage";
+import ManageItem from "../pages/items/manage";
 
 const MainStack = () => {
   return (
@@ -18,6 +20,10 @@ const MainStack = () => {
                   routes for. */}
         <Route path="*" element={<NoMatch />} />
       </Route>
+
+      <Route path="reports/:id" element={<HomePage />} />
+      <Route path="users/:id" element={<ManageUser />} />
+      <Route path="items/:id" element={<ManageItem />} />
     </Routes>
   );
 };

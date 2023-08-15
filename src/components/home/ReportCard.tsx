@@ -8,6 +8,7 @@ import { Report } from "../../model";
 import { useAxios } from "../../hooks/useAxios";
 import { BASE_URL_API } from "../../utils/api";
 import { DraggableDialog } from "../shared/ConfirmationDialog";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   report: Report;
@@ -17,6 +18,7 @@ const ReportCard = (props: Props) => {
   const { report } = props;
 
   const axios = useAxios();
+  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
@@ -34,6 +36,10 @@ const ReportCard = (props: Props) => {
     }
   };
 
+  const handleLearnMore = () => {
+    return navigate(`/reports/${report.id}`);
+  };
+
   return (
     <Card sx={{}}>
       <CardContent>
@@ -49,7 +55,9 @@ const ReportCard = (props: Props) => {
         <Typography variant="body2">{report.reporter}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleLearnMore}>
+          Learn More
+        </Button>
 
         <DraggableDialog
           title="Are you sure"

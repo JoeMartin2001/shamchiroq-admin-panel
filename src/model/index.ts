@@ -52,6 +52,7 @@ export type Item = {
   category: ITEM_CATEGORY;
   isBlocked: boolean;
   status: ItemStatus;
+  itemUser: User;
 };
 
 export enum REGIONS {

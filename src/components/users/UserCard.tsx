@@ -11,6 +11,7 @@ import moment from "moment";
 import { useAxios } from "../../hooks/useAxios";
 import { BASE_URL_API } from "../../utils/api";
 import { DraggableDialog } from "../shared/ConfirmationDialog";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   user: User;
@@ -20,14 +21,13 @@ export const UserCard = (props: Props) => {
   const { user } = props;
 
   const axios = useAxios();
+  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
   const handleRemoveUser = async () => {
     try {
-      await axios.deleteData(
-        `${BASE_URL_API}/report/removeUserById/${user.id}`
-      );
+      await axios.deleteData(`${BASE_URL_API}/user/removeUserById/${user.id}`);
 
       setOpen(false);
     } catch (error) {
@@ -35,6 +35,10 @@ export const UserCard = (props: Props) => {
 
       setOpen(false);
     }
+  };
+
+  const handleLearnMore = () => {
+    return navigate(`/users/${user.id}`);
   };
 
   return (
@@ -54,7 +58,9 @@ export const UserCard = (props: Props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleLearnMore}>
+          Learn More
+        </Button>
 
         <DraggableDialog
           title="Are you sure"
