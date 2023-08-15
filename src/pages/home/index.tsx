@@ -17,7 +17,7 @@ const HomePage = () => {
   const { data } = useAppSelector((state) => state.reports);
 
   const [page, setPage] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const getAllReports = useCallback(async () => {

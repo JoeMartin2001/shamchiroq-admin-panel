@@ -17,7 +17,7 @@ const UsersPage = () => {
   const { data } = useAppSelector((state) => state.users);
 
   const [page, setPage] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const getAllUsers = useCallback(async () => {
