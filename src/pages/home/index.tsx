@@ -5,13 +5,17 @@ import { useCallback, useEffect, useState } from "react";
 import { BASE_URL_API } from "../../utils/api";
 import ReportCard from "../../components/home/ReportCard";
 import { LoadingBackdrop } from "../../components/shared/LoadingBackdrop";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { ReportsSliceActions } from "../../store/features/reportsSlice";
 
 const limit = 10;
 
 const HomePage = () => {
   const axios = useAxios();
+  const dispatch = useAppDispatch();
 
-  const [allReports, setAllReports] = useState<Report[]>([]);
+  const { data } = useAppSelector((state) => state.reports);
+
   const [page, setPage] = useState(0);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +30,8 @@ const HomePage = () => {
       const updatedCount = Math.ceil(reports.data.count / limit);
 
       setCount(updatedCount);
-      setAllReports(newReports);
+
+      dispatch(ReportsSliceActions.setData(newReports));
     } catch (error) {
       console.log(error);
     }
@@ -34,12 +39,14 @@ const HomePage = () => {
   }, [page]);
 
   useEffect(() => {
-    setIsLoading(true);
+    if (data.length === 0) {
+      setIsLoading(true);
 
-    getAllReports().finally(() => {
-      setIsLoading(false);
-    });
-  }, [getAllReports]);
+      getAllReports().finally(() => {
+        setIsLoading(false);
+      });
+    }
+  }, [data.length, getAllReports]);
 
   if (isLoading) {
     return <LoadingBackdrop isLoading={isLoading} />;
@@ -47,10 +54,10 @@ const HomePage = () => {
 
   return (
     <div>
-      {allReports.length > 0 ? (
+      {data.length > 0 ? (
         <div>
           <Grid container spacing={2} marginBottom={5}>
-            {allReports.map((report, idx) => (
+            {data.map((report, idx) => (
               <Grid item xs={4} key={idx + report.id!}>
                 <ReportCard report={report} />
               </Grid>

@@ -5,13 +5,17 @@ import { User } from "../../model";
 import { UserCard } from "../../components/users/UserCard";
 import { Box, Grid, Pagination } from "@mui/material";
 import { LoadingBackdrop } from "../../components/shared/LoadingBackdrop";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { UsersSliceActions } from "../../store/features/usersSlice";
 
 const limit = 10;
 
 const UsersPage = () => {
   const axios = useAxios();
+  const dispatch = useAppDispatch();
 
-  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const { data } = useAppSelector((state) => state.users);
+
   const [page, setPage] = useState(0);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +30,8 @@ const UsersPage = () => {
       const updatedCount = Math.ceil(users.data.count / limit);
 
       setCount(updatedCount);
-      setAllUsers(newUsers);
+
+      dispatch(UsersSliceActions.setData(newUsers));
     } catch (error) {
       console.log(error);
     }
@@ -34,12 +39,14 @@ const UsersPage = () => {
   }, [page]);
 
   useEffect(() => {
-    setIsLoading(true);
+    if (data.length === 0) {
+      setIsLoading(true);
 
-    getAllUsers().finally(() => {
-      setIsLoading(false);
-    });
-  }, [getAllUsers]);
+      getAllUsers().finally(() => {
+        setIsLoading(false);
+      });
+    }
+  }, [data.length, getAllUsers]);
 
   if (isLoading) {
     return <LoadingBackdrop isLoading={isLoading} />;
@@ -47,11 +54,11 @@ const UsersPage = () => {
 
   return (
     <div>
-      {allUsers.length > 0 ? (
+      {data.length > 0 ? (
         <div>
           <Box marginBottom={5}>
             <Grid container spacing={2} marginBottom={5}>
-              {allUsers.map((user, idx) => (
+              {data.map((user, idx) => (
                 <Grid item xs={4} key={idx + user.id!}>
                   <UserCard user={user} key={idx + user.id!} />
                 </Grid>
