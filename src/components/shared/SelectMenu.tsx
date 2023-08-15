@@ -40,7 +40,7 @@ export const SelectMenu = (props: Props) => {
         {options.map((option, idx) => {
           return (
             <MenuItem value={option} key={option + idx}>
-              {option}
+              {option.toLocaleUpperCase()}
             </MenuItem>
           );
         })}

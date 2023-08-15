@@ -27,6 +27,15 @@ export const itemsSlice = createSlice({
 
       return updatedState;
     },
+    updateItem: (state, action: PayloadAction<Item>) => {
+      const newItem = action.payload;
+      const updatedData = [...state.data];
+
+      const idx = updatedData.findIndex((item) => item.id === newItem.id);
+      updatedData[idx] = newItem;
+
+      state.data = updatedData;
+    },
     removeItem: (state, action: PayloadAction<string>) => {
       const updatedState = { ...state };
       const updatedData = [...updatedState.data];
