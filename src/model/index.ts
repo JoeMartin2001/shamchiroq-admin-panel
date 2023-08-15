@@ -1,9 +1,16 @@
 export type User = {
-  id: string;
+  id?: string;
+  firstName: string;
+  firebaseMessagingToken?: string;
+  lastName: string;
   email: string;
   phone: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
+  region: string;
+  deletedAt?: Date;
+  items?: Item[];
+  profileImg?: string;
 };
 
 export type FontWeight = "regular" | "semibold" | "bold";

@@ -53,7 +53,7 @@ const UsersPage = () => {
             <Grid container spacing={2} marginBottom={5}>
               {allUsers.map((user, idx) => (
                 <Grid item xs={4} key={idx + user.id!}>
-                  <UserCard user={user} key={idx + user.id} />
+                  <UserCard user={user} key={idx + user.id!} />
                 </Grid>
               ))}
             </Grid>

@@ -20,6 +20,7 @@ import ListIcon from "@mui/icons-material/List";
 import { LogoutOutlined } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import { DraggableDialog } from "../shared/ConfirmationDialog";
 
 const drawerWidth = 240;
 
@@ -60,6 +61,8 @@ export const AppLayout = (props: Props) => {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = React.useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -99,14 +102,22 @@ export const AppLayout = (props: Props) => {
           );
         })}
 
-        <ListItem disablePadding>
-          <ListItemButton onClick={handleLogout}>
-            <ListItemIcon>
-              <LogoutOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Logout"} />
-          </ListItemButton>
-        </ListItem>
+        <DraggableDialog
+          title="Are you sure"
+          description="Are you sure you want to log out?"
+          open={isLogoutDialogOpen}
+          setOpen={setIsLogoutDialogOpen}
+          onProceed={handleLogout}
+        >
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => setIsLogoutDialogOpen(true)}>
+              <ListItemIcon>
+                <LogoutOutlined />
+              </ListItemIcon>
+              <ListItemText primary={"Logout"} />
+            </ListItemButton>
+          </ListItem>
+        </DraggableDialog>
       </List>
     </div>
   );
