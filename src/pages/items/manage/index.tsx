@@ -7,6 +7,8 @@ import {
   Container,
   Grid,
   IconButton,
+  ImageList,
+  ImageListItem,
   Snackbar,
   Toolbar,
   Typography,
@@ -42,6 +44,8 @@ const ManageItem = () => {
     const currentItem = data.find((item) => item.id === params.id);
 
     if (currentItem) {
+      setSelectedStatus(currentItem.status);
+      setSelectedCaseType(currentItem.case);
       setItemInfo(currentItem);
     }
   }, [data, params.id]);
@@ -81,7 +85,7 @@ const ManageItem = () => {
 
   return (
     <Container disableGutters maxWidth={false}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }} marginBottom={5}>
         <AppBar position="static">
           <Toolbar>
             <IconButton
@@ -105,7 +109,7 @@ const ManageItem = () => {
         </AppBar>
       </Box>
 
-      <Grid container spacing={2} marginBottom={2} padding={5}>
+      <Grid container spacing={2} marginBottom={2} paddingX={5}>
         <Grid item xs={3}>
           <SelectMenu
             value={selectedCaseType}
@@ -140,6 +144,40 @@ const ManageItem = () => {
           />
         </Grid>
       </Grid>
+
+      <Box paddingX={5} marginBottom={2}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Title
+        </Typography>
+
+        <Typography variant="body1" gutterBottom>
+          {itemInfo.title}
+        </Typography>
+      </Box>
+
+      <Box paddingX={5} marginBottom={2}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Description
+        </Typography>
+
+        <Typography variant="body1" gutterBottom>
+          {itemInfo.description}
+        </Typography>
+      </Box>
+
+      <Box paddingX={5} marginBottom={2}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Images
+        </Typography>
+
+        <ImageList sx={{ width: 500, height: 450 }} cols={3}>
+          {itemInfo.images.map((img) => (
+            <ImageListItem key={img}>
+              <img src={img} srcSet={img} alt={img} loading="lazy" />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Box>
 
       <Snackbar
         open={isSnackbarOpen}
