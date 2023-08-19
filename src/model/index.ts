@@ -90,3 +90,22 @@ export type Report = {
   updatedAt?: Date;
   deletedAt?: Date;
 };
+
+export type Notification = {
+  id?: string;
+  title: string;
+  description: string;
+  hasBeenRead: boolean;
+  createdAt: Date;
+  deletedAt?: Date;
+  notificationUser: User;
+};
+
+export type Block = {
+  id?: string;
+  description: string;
+  createdAt: Date;
+  deletedAt?: Date;
+  blockerUser: User;
+  blockeeUser: User;
+};

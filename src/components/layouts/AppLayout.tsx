@@ -17,7 +17,11 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import ListIcon from "@mui/icons-material/List";
-import { LogoutOutlined } from "@mui/icons-material";
+import {
+  BlockOutlined,
+  LogoutOutlined,
+  NotificationsOutlined,
+} from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { DraggableDialog } from "../shared/ConfirmationDialog";
@@ -45,6 +49,17 @@ const ROUTES: RouteType[] = [
     path: "/items",
     title: "Items",
     Icon: <ListIcon />,
+  },
+  {
+    path: "/blocks",
+    title: "Blocks",
+    Icon: <BlockOutlined />,
+  },
+
+  {
+    path: "/notifications",
+    title: "Notifications",
+    Icon: <NotificationsOutlined />,
   },
 ];
 

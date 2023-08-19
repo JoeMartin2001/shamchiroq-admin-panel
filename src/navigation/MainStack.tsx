@@ -6,6 +6,8 @@ import { NoMatch } from "../components/shared/noMatch";
 import ItemsPage from "../pages/items";
 import ManageUser from "../pages/users/manage";
 import ManageItem from "../pages/items/manage";
+import BlocksPage from "../pages/blocks";
+import NotificationsPage from "../pages/notifications";
 
 const MainStack = () => {
   return (
@@ -14,6 +16,8 @@ const MainStack = () => {
         <Route index element={<HomePage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="items" element={<ItemsPage />} />
+        <Route path="blocks" element={<BlocksPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
 
         {/* Using path="*"" means "match anything", so this route
                   acts like a catch-all for URLs that we don't have explicit
@@ -24,6 +28,8 @@ const MainStack = () => {
       <Route path="reports/:id" element={<HomePage />} />
       <Route path="users/:id" element={<ManageUser />} />
       <Route path="items/:id" element={<ManageItem />} />
+      <Route path="blocks/:id" element={<ManageItem />} />
+      <Route path="notifications/:id" element={<ManageItem />} />
     </Routes>
   );
 };
