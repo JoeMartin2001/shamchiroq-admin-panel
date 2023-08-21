@@ -56,6 +56,7 @@ export const UserCard = (props: Props) => {
         <Typography variant="body2">
           Joined at {moment(new Date(user.createdAt!)).format("MM/DD/YYYY")}
         </Typography>
+        <Typography variant="body2">ID: {user.id}</Typography>
       </CardContent>
       <CardActions>
         <Button size="small" onClick={handleLearnMore}>

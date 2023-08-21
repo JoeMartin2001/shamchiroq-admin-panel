@@ -4,11 +4,13 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Report } from "../../model";
+import { Report, User } from "../../model";
 import { useAxios } from "../../hooks/useAxios";
 import { BASE_URL_API } from "../../utils/api";
 import { DraggableDialog } from "../shared/ConfirmationDialog";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { ReportsSliceActions } from "../../store/features/reportsSlice";
 
 interface Props {
   report: Report;
@@ -19,6 +21,7 @@ const ReportCard = (props: Props) => {
 
   const axios = useAxios();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
 
@@ -27,6 +30,8 @@ const ReportCard = (props: Props) => {
       await axios.deleteData(
         `${BASE_URL_API}/report/removeReportById/${report.id}`
       );
+
+      dispatch(ReportsSliceActions.removeReport(report.id!));
 
       setOpen(false);
     } catch (error) {
@@ -40,6 +45,9 @@ const ReportCard = (props: Props) => {
     return navigate(`/reports/${report.id}`);
   };
 
+  const reportee = report.reporteeId as User;
+  const reporter = report.reporterId as User;
+
   return (
     <Card sx={{}}>
       <CardContent>
@@ -47,10 +55,13 @@ const ReportCard = (props: Props) => {
           {report.description}
         </Typography>
         <Typography variant="h5" component="div">
-          {report.itemId}
+          {report.description}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {report.reportee}
+          Reporter: {`${reporter.firstName} ${reporter.lastName}`}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Reportee: {`${reportee.firstName} ${reportee.lastName}`}
         </Typography>
         <Typography variant="body2">{report.reporter}</Typography>
       </CardContent>

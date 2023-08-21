@@ -89,6 +89,10 @@ export type Report = {
   createdAt: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  reporterId?: string | User;
+  reporteeId?: string | User;
+  reporterUserId?: string;
+  reporteeUserId?: string;
 };
 
 export type Notification = {
