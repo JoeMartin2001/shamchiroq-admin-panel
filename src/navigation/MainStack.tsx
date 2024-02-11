@@ -8,6 +8,7 @@ import ManageUser from "../pages/users/manage";
 import ManageItem from "../pages/items/manage";
 import BlocksPage from "../pages/blocks";
 import NotificationsPage from "../pages/notifications";
+import { ManageBlock } from "../pages/blocks/manage";
 
 const MainStack = () => {
   return (
@@ -19,16 +20,13 @@ const MainStack = () => {
         <Route path="blocks" element={<BlocksPage />} />
         <Route path="notifications" element={<NotificationsPage />} />
 
-        {/* Using path="*"" means "match anything", so this route
-                  acts like a catch-all for URLs that we don't have explicit
-                  routes for. */}
         <Route path="*" element={<NoMatch />} />
       </Route>
 
       <Route path="reports/:id" element={<HomePage />} />
       <Route path="users/:id" element={<ManageUser />} />
       <Route path="items/:id" element={<ManageItem />} />
-      <Route path="blocks/:id" element={<ManageItem />} />
+      <Route path="blocks/:id" element={<ManageBlock />} />
       <Route path="notifications/:id" element={<ManageItem />} />
     </Routes>
   );

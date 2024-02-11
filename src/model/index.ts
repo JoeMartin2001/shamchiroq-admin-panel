@@ -110,6 +110,8 @@ export type Block = {
   description: string;
   createdAt: Date;
   deletedAt?: Date;
-  blockerUser: User;
-  blockeeUser: User;
+  blockerUser?: User;
+  blockeeUser?: User;
+  blockerUserId: string;
+  blockeeUserId: string;
 };
